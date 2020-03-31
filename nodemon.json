@@ -1,0 +1,11 @@
+{
+    "env": {
+        "JWT_KEY": "secret",
+        "host": "localhost",
+        "user": "nutrduod_root",
+        "password": "Lasa2012",      
+        "database": "nutrduod_coop",
+        "sendby": "88lasantha@gmail.com",
+        "sendbypass": "Lasa2012g"
+    }
+}
