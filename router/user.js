@@ -12,8 +12,8 @@ const multer = require('multer');
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, './uploads/');
-        // cb(null, '../coop.nutrilitesrilanka.com/uploads/profile/');
+        // cb(null, './uploads/');
+        cb(null, '../coop.nutrilitesrilanka.com/uploads/profile/');
     },
     filename: function (req, file, cb) {
         let date = dateFormat(new Date(), 'yyyyMMddHHmmss_', 'en-US', '+0530');
