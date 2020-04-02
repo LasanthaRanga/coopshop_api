@@ -10,25 +10,25 @@ const mycon = require('../util/conn');
 
 
 
-exports.picupload =  
+exports.picupload =
 
 
 
 
 
-exports.login = (req, res, next) => {
-    try {
-        mycon.execute("select * from user",
-            (error, rows, fildData) => {
-                if (!error) {
-                    res.send(rows);
-                }
-            });
-    } catch (error) {
-        console.log(error);
-        res.status(500).send(error);
+    exports.login = (req, res, next) => {
+        try {
+            mycon.execute("select * from user",
+                (error, rows, fildData) => {
+                    if (!error) {
+                        res.send(rows);
+                    }
+                });
+        } catch (error) {
+            console.log(error);
+            res.status(500).send(error);
+        }
     }
-}
 
 exports.sellerSignUp = (req, res, next) => {
     try {
@@ -102,6 +102,30 @@ exports.loginSeller = (req, res, next) => {
 
 
 
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+}
+
+
+exports.updateUser = (req, res, next) => {
+    try {
+        user.findOne({
+            where: { iduser: req.body.uid }
+        }).then(user => {
+            user.update({
+                branch: req.body.branch,
+                member: req.body.member,
+                description: req.body.description,
+                gender: req.bod.gender,
+                nic: req.body.nic,
+                other1: req.body.other1,
+                other2: req.body.other2,
+            }).then(user => {
+                res.send(user);
+            });
+        });
     } catch (error) {
         console.log(error);
         res.status(500).send(error);

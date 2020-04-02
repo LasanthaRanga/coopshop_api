@@ -32,6 +32,13 @@ const upload = multer({ storage: storage });
 router.get("/login", userController.login);
 router.post("/signup_seller", userController.sellerSignUp);
 router.post("/login_seller", userController.loginSeller);
+router.post("/update_user", userController.updateUser);
+
+
+
+
+
+
 
 router.post("/pic_upload", upload.single('attach'), (req, res, next) => {
 
@@ -40,15 +47,8 @@ router.post("/pic_upload", upload.single('attach'), (req, res, next) => {
     console.log("+++++++++++")
 
     console.log(req.body.user + "   uid ==");
-
-
-
     console.log(path + "  path");
-
     try {
-
-
-
         user.findOne({
             where: { iduser: req.body.user }
         }).then(user => {
