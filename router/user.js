@@ -4,18 +4,19 @@ const checkAuth = require('../middleware/check-auth');
 const userController = require('../controller/user');
 const scon = require('../util/sequl');
 const user = scon.import('../models/user');
-const sharp = require('sharp');
 
 var dateFormat = require('dateformat');
 let path = '';
 const multer = require('multer');
+const sharp = require('sharp');
+var fs = require('fs');
 
-const uploadPath = '../coop.nutrilitesrilanka.com/uploads/profile/';
+const uppath = "../coop.nutrilitesrilanka.com/uploads/";
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        // cb(null, './uploads/');
-        cb(null, uploadPath);
+        //  cb(null, './uploads/');
+        cb(null, uppath);
     },
     filename: function (req, file, cb) {
         let date = dateFormat(new Date(), 'yyyyMMddHHmmss_', 'en-US', '+0530');
@@ -23,7 +24,6 @@ const storage = multer.diskStorage({
         cb(null, path);
     }
 });
-
 const upload = multer({ storage: storage });
 
 
@@ -45,23 +45,27 @@ router.post("/update_user", userController.updateUser);
 
 router.post("/pic_upload", upload.single('attach'), (req, res, next) => {
 
-    console.log("===========");
-    let date = dateFormat(new Date(), 'yyyyMMddHHmmss_', 'en-US', '+0530');
-    path = date + file.originalname;
+    console.log(req.file.path);
 
-    sharp(req.file.path).resize(300, 300).png({
-        quality: 72,
-        chromeSubsampling: '4.4.4'
-    }).toFile(path, (err, info) => {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log(info);
-        }
-    });
 
- 
-    console.log("+++++++++++")
+    try {
+        sharp(req.file.path).resize(300, 300).png({
+            quality: 72,
+            chromaSubsampling: '4:4:4'
+        }).toFile(uppath + 'profile/' + path, (err, info) => {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log(info);
+                fs.unlink(req.file.path, function (err) {
+                    if (err) throw err;
+                    console.log('File deleted!');
+                });
+            }
+        })
+    } catch (error) {
+        console.log(error);
+    }
 
     console.log(req.body.user + "   uid ==");
     console.log(path + "  path");
