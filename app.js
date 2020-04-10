@@ -3,7 +3,7 @@ const app = express();
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-
+const port = process.env.PORT || 3000;
 const userRouter = require('./router/user');
 
 app.use(cors());
@@ -34,4 +34,4 @@ app.use((error, req, res, next) => {
     })
 });
 
-app.listen(3000);
+app.listen(port);

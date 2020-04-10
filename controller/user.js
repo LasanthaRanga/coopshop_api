@@ -10,25 +10,19 @@ const mycon = require('../util/conn');
 
 
 
-exports.picupload =
-
-
-
-
-
-    exports.login = (req, res, next) => {
-        try {
-            mycon.execute("select * from user",
-                (error, rows, fildData) => {
-                    if (!error) {
-                        res.send(rows);
-                    }
-                });
-        } catch (error) {
-            console.log(error);
-            res.status(500).send(error);
-        }
+exports.picupload = exports.login = (req, res, next) => {
+    try {
+        mycon.execute("select * from user",
+            (error, rows, fildData) => {
+                if (!error) {
+                    res.send(rows);
+                }
+            });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
     }
+}
 
 exports.sellerSignUp = (req, res, next) => {
     try {
@@ -69,7 +63,6 @@ exports.sellerSignUp = (req, res, next) => {
 
 exports.loginSeller = (req, res, next) => {
     try {
-
         user.findOne({
             where: { email: req.body.email }
         }).then(use => {
@@ -97,10 +90,6 @@ exports.loginSeller = (req, res, next) => {
                 }
             });
         });
-
-
-
-
 
     } catch (error) {
         console.log(error);
@@ -131,3 +120,26 @@ exports.updateUser = (req, res, next) => {
         res.status(500).send(error);
     }
 }
+
+exports.getUserById = (req, res, next) => {
+    try {
+        try {
+            mycon.execute("SELECT `user`.iduser,`user`.`name`,`user`.email,`user`.mobile,`user`.branch,`user`.member,`user`.description,`user`.gender,`user`.image," +
+                " `user`.isactive,`user`.`status`,`user`.rating,`user`.nic,`user`.other1,`user`.other2,`user`.utype_idutype,`user`.createdAt,`user`.updatedAt" +
+                " FROM `user` WHERE `user`.iduser= " + req.body.uid,
+                (error, rows, fildData) => {
+                    if (!error) {
+                        res.send(rows[0]);
+                    }
+                });
+        } catch (error) {
+            console.log(error);
+            res.status(500).send(error);
+        }
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+}
+
