@@ -90,7 +90,7 @@ router.get('/propic/:path', (req, res, next) => {
     let url = downpath + 'profile/' + req.params.path;
     console.log(appRoot + uppath);
 
-    let filepath = appRoot + url;
+    let filepath =  url;
     let xx = fs.readFileSync(filepath, 'base64');
 
     res.send({ xx });
