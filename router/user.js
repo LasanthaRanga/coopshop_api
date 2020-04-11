@@ -8,12 +8,12 @@ const user = scon.import('../models/user');
 var dateFormat = require('dateformat');
 let path = '';
 const multer = require('multer');
-const sharp = require('sharp');
+// const sharp = require('sharp');
 var fs = require('fs');
 var appRoot = require('app-root-path');
 
 //const uppath = "../coop.nutrilitesrilanka.com/uploads/";
-const uppath = "./uploads/";
+const uppath = "./uploads/profile/";
 const downpath = "/uploads/";
 
 const storage = multer.diskStorage({
@@ -47,20 +47,25 @@ router.post("/getUserById",checkAuth, userController.getUserById);
 router.post("/pic_upload", upload.single('attach'), (req, res, next) => {
     console.log(req.file.path);
     try {
-        sharp(req.file.path).resize(350, 350).png({
-            quality: 72,
-            chromaSubsampling: '4:4:4'
-        }).toFile(uppath + 'profile/' + path, (err, info) => {
-            if (err) {
-                console.log(err);
-            } else {
-                console.log(info);
-                fs.unlink(req.file.path, function (err) {
-                    if (err) throw err;
-                    console.log('File deleted!');
-                });
-            }
-        })
+
+
+
+
+
+        // sharp(req.file.path).resize(350, 350).png({
+        //     quality: 72,
+        //     chromaSubsampling: '4:4:4'
+        // }).toFile(uppath + 'profile/' + path, (err, info) => {
+        //     if (err) {
+        //         console.log(err);
+        //     } else {
+        //         console.log(info);
+        //         fs.unlink(req.file.path, function (err) {
+        //             if (err) throw err;
+        //             console.log('File deleted!');
+        //         });
+        //     }
+        // })
     } catch (error) {
         console.log(error);
     }
