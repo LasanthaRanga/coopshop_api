@@ -12,8 +12,8 @@ const multer = require('multer');
 var fs = require('fs');
 var appRoot = require('app-root-path');
 
-//const uppath = "../coop.nutrilitesrilanka.com/uploads/";
-const uppath = "./uploads/profile/";
+const uppath = "../coop.nutrilitesrilanka.com/uploads/profile/";
+// const uppath = "./uploads/profile/";
 const downpath = "./uploads/";
 
 const storage = multer.diskStorage({
@@ -36,7 +36,7 @@ router.get("/login", userController.login);
 router.post("/signup_seller", userController.sellerSignUp);
 router.post("/login_seller", userController.loginSeller);
 router.post("/update_user", userController.updateUser);
-router.post("/getUserById", userController.getUserById);
+router.post("/getUserById", checkAuth, userController.getUserById);
 router.post("/getPrivilages", userController.getPrivilages);
 
 
@@ -72,12 +72,13 @@ router.post("/pic_upload", upload.single('attach'), (req, res, next) => {
     }
     console.log(req.body.user + "   uid ==");
     console.log(path + "  path");
+    let pp = uppath + path;
     try {
         user.findOne({
             where: { iduser: req.body.user }
         }).then(user => {
             user.update({
-                image: path
+                image: pp
             }).then(user => {
                 res.send(user);
             });
@@ -91,7 +92,7 @@ router.get('/propic/:path', (req, res, next) => {
     let url = downpath + 'profile/' + req.params.path;
     console.log(appRoot + uppath);
 
-    let filepath =  url;
+    let filepath = url;
     let xx = fs.readFileSync(filepath, 'base64');
 
     res.send({ xx });
