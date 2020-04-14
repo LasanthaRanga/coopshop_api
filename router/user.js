@@ -14,7 +14,7 @@ var appRoot = require('app-root-path');
 
 const uppath = "../coop.nutrilitesrilanka.com/uploads/profile/";
 // const uppath = "./uploads/profile/";
-const downpath = "./uploads/";
+const downpath = "https://coop.nutrilitesrilanka.com/uploads/profile/";
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -72,7 +72,7 @@ router.post("/pic_upload", upload.single('attach'), (req, res, next) => {
     }
     console.log(req.body.user + "   uid ==");
     console.log(path + "  path");
-    let pp = uppath + path;
+    let pp = downpath + path;
     try {
         user.findOne({
             where: { iduser: req.body.user }
