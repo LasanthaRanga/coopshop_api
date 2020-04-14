@@ -66,30 +66,39 @@ exports.loginSeller = (req, res, next) => {
         user.findOne({
             where: { email: req.body.email }
         }).then(use => {
-            bcript.compare(req.body.pword, use.pword, (err, result) => {
-                if (err) {
-                    return res.status(401).json({ message: 'user name or password is wrong' });
-                }
-                if (result) {
-                    const token = jwt.sign({
-                        uid: use.iduser,
-                        name: use.name,
-                        nic: use.nic,
-                        mobile: use.mobile,
-                        image: use.image,
-                        uType: use.utype_idutype
-                    },
-                        process.env.JWT_KEY,
-                        {
-                            expiresIn: "1h"
+            if (use) {
+                bcript.compare(req.body.pword, use.pword, (err, result) => {
+                    if (err) {
+                        return res.status(401).json({ message: 'user name or password is wrong' });
+                    }
+                    if (result) {
+                        const token = jwt.sign({
+                            uid: use.iduser,
+                            name: use.name,
+                            nic: use.nic,
+                            mobile: use.mobile,
+                            image: use.image,
+                            uType: use.utype_idutype
                         },
-                    );
-                    return res.status(200).json({
-                        mg: "Auth Successfull",
-                        token: token
-                    });
-                }
-            });
+                            process.env.JWT_KEY,
+                            {
+                                expiresIn: "1h"
+                            },
+                        );
+                        return res.status(200).json({
+                            mg: "Auth Successfull",
+                            token: token
+                        });
+                    }
+                });
+
+            } else {
+                return res.status(401).json({ message: 'user name or password is wrong' });
+            }
+
+        }).catch(error => {
+            console.log(error);
+            res.send(error);
         });
 
     } catch (error) {
