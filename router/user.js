@@ -14,7 +14,7 @@ var appRoot = require('app-root-path');
 
 //const uppath = "../coop.nutrilitesrilanka.com/uploads/";
 const uppath = "./uploads/profile/";
-const downpath = "/uploads/";
+const downpath = "./uploads/";
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -37,6 +37,7 @@ router.post("/signup_seller", userController.sellerSignUp);
 router.post("/login_seller", userController.loginSeller);
 router.post("/update_user", userController.updateUser);
 router.post("/getUserById",checkAuth, userController.getUserById);
+router.post("/getPrivilages", userController.getPrivilages);
 
 
 

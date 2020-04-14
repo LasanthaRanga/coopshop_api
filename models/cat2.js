@@ -9,7 +9,7 @@ module.exports = function(sequelize, DataTypes) {
 			autoIncrement: true
 		},
 		cat2: {
-			type: DataTypes.STRING(45),
+			type: DataTypes.STRING(255),
 			allowNull: true
 		},
 		status: {
@@ -34,6 +34,10 @@ module.exports = function(sequelize, DataTypes) {
 		},
 		updatedAt: {
 			type: DataTypes.DATE,
+			allowNull: true
+		},
+		cat2_sinhala: {
+			type: DataTypes.STRING(255),
 			allowNull: true
 		}
 	}, {

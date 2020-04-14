@@ -76,7 +76,8 @@ exports.loginSeller = (req, res, next) => {
                         name: use.name,
                         nic: use.nic,
                         mobile: use.mobile,
-                        image: use.image
+                        image: use.image,
+                        uType: use.utype_idutype
                     },
                         process.env.JWT_KEY,
                         {
@@ -125,7 +126,7 @@ exports.getUserById = (req, res, next) => {
     try {
         try {
             mycon.execute("SELECT `user`.iduser,`user`.`name`,`user`.email,`user`.mobile,`user`.branch,`user`.member,`user`.description,`user`.gender,`user`.image," +
-                " `user`.isactive,`user`.`status`,`user`.rating,`user`.nic,`user`.other1,`user`.other2,`user`.utype_idutype,`user`.createdAt,`user`.updatedAt" +
+                " `user`.isactive,`user`.`status`,`user`.rating,`user`.nic,`user`.other1,`user`.other2,`user`.utype_idutype,`user`.createdAt,`user`.updatedAt " +
                 " FROM `user` WHERE `user`.iduser= " + req.body.uid,
                 (error, rows, fildData) => {
                     if (!error) {
@@ -143,3 +144,18 @@ exports.getUserById = (req, res, next) => {
     }
 }
 
+
+exports.getPrivilages = (req, res, next) => {
+    try {
+        console.log('user ' + req.body.usertype);
+        mycon.execute("SELECT privilages.id,privilages.title,privilages.url,privilages.icon,privilages.`status`,privilages.utype FROM privilages WHERE privilages.`status`=1 AND privilages.utype=" + req.body.usertype,
+            (error, rows, fildData) => {
+                if (!error) {
+                    res.send(rows);
+                }
+            });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+}

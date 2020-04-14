@@ -33,7 +33,7 @@ module.exports = function(sequelize, DataTypes) {
 			allowNull: true
 		},
 		description: {
-			type: DataTypes.STRING(45),
+			type: DataTypes.STRING(255),
 			allowNull: true
 		},
 		gender: {
@@ -41,7 +41,7 @@ module.exports = function(sequelize, DataTypes) {
 			allowNull: true
 		},
 		image: {
-			type: DataTypes.TEXT(0),
+			type: DataTypes.TEXT,
 			allowNull: true
 		},
 		isactive: {

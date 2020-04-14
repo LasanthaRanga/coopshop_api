@@ -1,14 +1,22 @@
 /* jshint indent: 1 */
 
 module.exports = function(sequelize, DataTypes) {
-	return sequelize.define('cat1', {
-		idcat1: {
+	return sequelize.define('privilages', {
+		id: {
 			type: DataTypes.INTEGER(11),
 			allowNull: false,
 			primaryKey: true,
 			autoIncrement: true
 		},
-		cat: {
+		title: {
+			type: DataTypes.STRING(255),
+			allowNull: true
+		},
+		url: {
+			type: DataTypes.STRING(255),
+			allowNull: true
+		},
+		icon: {
 			type: DataTypes.STRING(255),
 			allowNull: true
 		},
@@ -16,9 +24,13 @@ module.exports = function(sequelize, DataTypes) {
 			type: DataTypes.INTEGER(11),
 			allowNull: true
 		},
-		description: {
-			type: DataTypes.TEXT,
-			allowNull: true
+		utype: {
+			type: DataTypes.INTEGER(11),
+			allowNull: true,
+			references: {
+				model: 'utype',
+				key: 'idutype'
+			}
 		},
 		createdAt: {
 			type: DataTypes.DATE,
@@ -27,12 +39,8 @@ module.exports = function(sequelize, DataTypes) {
 		updatedAt: {
 			type: DataTypes.DATE,
 			allowNull: true
-		},
-		cat_sinhala: {
-			type: DataTypes.STRING(255),
-			allowNull: true
 		}
 	}, {
-		tableName: 'cat1'
+		tableName: 'privilages'
 	});
 };
