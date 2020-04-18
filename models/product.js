@@ -67,6 +67,14 @@ module.exports = function(sequelize, DataTypes) {
 		updatedAt: {
 			type: DataTypes.DATE,
 			allowNull: true
+		},
+		name_s: {
+			type: DataTypes.STRING(255),
+			allowNull: true
+		},
+		description_s: {
+			type: DataTypes.TEXT,
+			allowNull: true
 		}
 	}, {
 		tableName: 'product'

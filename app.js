@@ -36,6 +36,7 @@ app.options('*', cors(corsOptions));
 
 const userRouter = require('./router/user');
 const catRouter = require('./router/category_router');
+const productRouter = require('./router/product');
 
 
 
@@ -55,6 +56,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/user', userRouter);
 app.use('/cat', catRouter);
+app.use('/prod', productRouter),
+
 
 app.use((req, res, next) => {
     const error = new Error('Not Found');

@@ -86,3 +86,67 @@ exports.getSubCatByMcat = exports.login = (req, res, next) => {
         res.status(500).send(error);
     }
 }
+
+exports.updateMcat = (req, res, next) => {
+    try {
+        cat1.findOne({
+            where: { idcat1: req.body.idcat1 }
+        }).then(cat1 => {
+            cat1.update({
+                cat: req.body.cat,
+                status: 1,
+                description: req.body.description,
+                cat_sinhala: req.body.cat_sinhala
+            }).then(cat1 => {
+                res.send(cat1);
+            });
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+}
+
+exports.updateScat = (req, res, next) => {
+    try {
+        cat1.findOne({
+            where: { idcat1: req.body.idcat1 }
+        }).then(cat1 => {
+            cat1.update({
+                cat: req.body.cat,
+                status: 1,
+                description: req.body.description,
+                cat_sinhala: req.body.cat_sinhala
+            }).then(cat1 => {
+                res.send(cat1);
+            });
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+}
+
+exports.updateScat = (req, res, next) => {
+
+    console.log(req.body.idcat2);
+
+    try {
+        cat2.findOne({
+            where: { idcat2: req.body.idcat2 }
+        }).then(cat2 => {
+            cat2.update({
+                cat1_idcat1: req.body.cat1_idcat1,
+                cat2: req.body.cat2,
+                status: 1,
+                description: req.body.description,
+                cat2_sinhala: req.body.cat2_sinhala
+            }).then(cat2 => {
+                res.send(cat2);
+            });
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+}

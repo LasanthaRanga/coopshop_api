@@ -12,8 +12,9 @@ const multer = require('multer');
 var fs = require('fs');
 var appRoot = require('app-root-path');
 
-const uppath = "../coop.nutrilitesrilanka.com/uploads/profile/";
-// const uppath = "./uploads/profile/";
+
+ const uppath = "../coop.nutrilitesrilanka.com/uploads/profile/";
+//ෆෆconst uppath = "./uploads/profile/";
 const downpath = "https://coop.nutrilitesrilanka.com/uploads/profile/";
 
 const storage = multer.diskStorage({
@@ -38,10 +39,6 @@ router.post("/login_seller", userController.loginSeller);
 router.post("/update_user", userController.updateUser);
 router.post("/getUserById", checkAuth, userController.getUserById);
 router.post("/getPrivilages", userController.getPrivilages);
-
-
-
-
 
 
 
