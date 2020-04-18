@@ -9,9 +9,7 @@ const mycon = require('../util/conn');
 
 
 exports.regProd = (req, res, next) => {
-
     console.log(req.body);
-
     try {
         product.create({
             name: req.body.name,
@@ -33,6 +31,23 @@ exports.regProd = (req, res, next) => {
         res.status(500).send(error);
     }
 }
+
+exports.getProductImage = (req, res, next) => {
+    try {
+        let idprod = req.body.idproduct
+        mycon.execute("SELECT prodimage.idprodimage,prodimage.url,prodimage.product_idproduct FROM prodimage WHERE prodimage.`status`=1 AND prodimage.product_idproduct=" + idprod,
+            (error, rows, fildData) => {
+                if (!error) {
+                    res.send(rows);
+                }
+            });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+}
+
+
 
 exports.getAllProduct = (req, res, next) => {
     try {
