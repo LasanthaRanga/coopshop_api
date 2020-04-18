@@ -58,6 +58,7 @@ router.post("/pic_upload", upload.single('attach'), (req, res, next) => {
 
 router.post("/getAll", prodController.getAllProduct);
 router.post("/regProd", prodController.regProd);
+router.post("/getImages", prodController.getProductImage);
 
 
 module.exports = router;
