@@ -1,10 +1,12 @@
 const scon = require('../util/sequl');
 const user = scon.import('../models/user');
 const utype = scon.import('../models/utype');
+const address = scon.import('../models/address')
 
 const bcript = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const mycon = require('../util/conn');
+const mail = require('../middleware/email');
 
 
 
@@ -26,6 +28,7 @@ exports.picupload = exports.login = (req, res, next) => {
 
 exports.sellerSignUp = (req, res, next) => {
     try {
+        var val = Math.floor(1000 + Math.random() * 9000);
 
         user.findOne({
             where: { email: req.body.email }
@@ -46,8 +49,16 @@ exports.sellerSignUp = (req, res, next) => {
                             pword: hash,
                             mobile: req.body.mobile,
                             utype_idutype: 1,
-                            status: 0
+                            status: 0,
+                            isactive: 0,
+                            other1: val
                         }).then(result => {
+                            param = {
+                                subject: 'COOP SHOP Verification',
+                                message: 'Welcome to COOP SHOP. Your Verification code is : ' + val,
+                                to: req.body.email
+                            };
+                            // mail.emailSend(param);
                             res.send(result);
                         });
                     }
@@ -117,10 +128,13 @@ exports.updateUser = (req, res, next) => {
                 branch: req.body.branch,
                 member: req.body.member,
                 description: req.body.description,
-                gender: req.bod.gender,
+                //  gender: req.bod.gender,
                 nic: req.body.nic,
                 other1: req.body.other1,
                 other2: req.body.other2,
+                bussynes: req.body.bussynes,
+                nature: req.body.nature,
+                tp: req.body.tp
             }).then(user => {
                 res.send(user);
             });
@@ -131,12 +145,46 @@ exports.updateUser = (req, res, next) => {
     }
 }
 
+exports.addAddress = (req, res, next) => {
+    try {
+        address.create({
+            user_iduser: req.body.user_iduser,
+            line1: req.body.line1,
+            line2: req.body.line2,
+            line3: req.body.line3,
+            postal_code: req.body.postal_code,
+            country: 'Sri Lanka'
+        }).then(result => {
+            res.send(result);
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+}
+
+exports.getAddress = (req, res, next) => {
+    try {
+        mycon.execute("SELECT address.idaddress,address.line1,address.line2,address.line3,address.postal_code,address.country,address.x,address.y, " +
+            "address.`status`,address.isdiliver,address.user_iduser,address.createdAt,address.updatedAt FROM address WHERE address.user_iduser=" + req.body.uid,
+            (error, rows, fildData) => {
+                if (!error) {
+                    res.send(rows);
+                }
+            });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+}
+
+
 exports.getUserById = (req, res, next) => {
     try {
         try {
-            mycon.execute("SELECT `user`.iduser,`user`.`name`,`user`.email,`user`.mobile,`user`.branch,`user`.member,`user`.description,`user`.gender,`user`.image," +
-                " `user`.isactive,`user`.`status`,`user`.rating,`user`.nic,`user`.other1,`user`.other2,`user`.utype_idutype,`user`.createdAt,`user`.updatedAt " +
-                " FROM `user` WHERE `user`.iduser= " + req.body.uid,
+            mycon.execute("SELECT `user`.iduser,`user`.`name`,`user`.email,`user`.mobile,`user`.branch,`user`.member,`user`.description,`user`.gender, " +
+                "`user`.image,`user`.isactive,`user`.`status`,`user`.rating,`user`.nic,`user`.other1,`user`.other2,`user`.utype_idutype, " +
+                "`user`.bussynes,`user`.nature,`user`.tp,`user`.createdAt,`user`.updatedAt FROM `user` WHERE `user`.iduser= " + req.body.uid,
                 (error, rows, fildData) => {
                     if (!error) {
                         res.send(rows[0]);
@@ -154,6 +202,7 @@ exports.getUserById = (req, res, next) => {
 }
 
 
+
 exports.getPrivilages = (req, res, next) => {
     try {
         console.log('user ' + req.body.usertype);
@@ -167,4 +216,58 @@ exports.getPrivilages = (req, res, next) => {
         console.log(error);
         res.status(500).send(error);
     }
+}
+
+exports.getSellers = (req, res, next) => {
+    try {
+        let isactive = req.body.isactive;
+        if (isactive === 0 || isactive == 1) {
+            mycon.execute("SELECT `user`.iduser,`user`.`name`,`user`.email,`user`.mobile,`user`.branch,`user`.member,`user`.description,`user`.image,`user`.isactive,`user`.`status`,`user`.rating,`user`.nic,`user`.other1,`user`.other2,`user`.utype_idutype,`user`.createdAt,`user`.updatedAt FROM `user` " +
+                " WHERE `user`.utype_idutype=1 AND `user`.isactive=" + isactive,
+                (error, rows, fildData) => {
+                    if (!error) {
+                        res.send(rows);
+                    }
+                });
+        } else {
+            mycon.execute("SELECT `user`.iduser,`user`.`name`,`user`.email,`user`.mobile,`user`.branch,`user`.member,`user`.description,`user`.image,`user`.isactive,`user`.`status`,`user`.rating,`user`.nic,`user`.other1,`user`.other2,`user`.utype_idutype,`user`.createdAt,`user`.updatedAt FROM `user` " +
+                " WHERE `user`.utype_idutype=1 ",
+                (error, rows, fildData) => {
+                    if (!error) {
+                        res.send(rows);
+                    }
+                });
+        }
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+}
+
+exports.emailVerify = (req, res, next) => {
+    try {
+        user.findOne({
+            where: { email: req.body.email }
+        }).then(use => {
+            if (use.other1 === req.body.code) {
+                use.update({
+                    status: 1
+                }).then(use => {
+                    res.send({ mg: 'ok' });
+                });
+            } else {
+                res.send({ mg: 'no' });
+            }
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+}
+
+exports.mail = (req, res, next) => {
+    mail.emailSend(req, res, next);
+    mail.smsSend(req, res, next);
+    res.send({ 'OK': 'DONE' });
 }

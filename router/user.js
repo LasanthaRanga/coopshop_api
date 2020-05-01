@@ -39,6 +39,10 @@ router.post("/login_seller", userController.loginSeller);
 router.post("/update_user", userController.updateUser);
 router.post("/getUserById", checkAuth, userController.getUserById);
 router.post("/getPrivilages", userController.getPrivilages);
+router.post("/getSellers", userController.getSellers);
+router.post("/emailVerify", userController.emailVerify);
+router.post("/addAddress", userController.addAddress);
+router.post("/getAddress", userController.getAddress);
 
 
 

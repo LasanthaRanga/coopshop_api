@@ -25,15 +25,15 @@ module.exports = function(sequelize, DataTypes) {
 			allowNull: true
 		},
 		branch: {
-			type: DataTypes.STRING(45),
+			type: DataTypes.STRING(255),
 			allowNull: true
 		},
 		member: {
-			type: DataTypes.STRING(45),
+			type: DataTypes.STRING(255),
 			allowNull: true
 		},
 		description: {
-			type: DataTypes.STRING(255),
+			type: DataTypes.TEXT,
 			allowNull: true
 		},
 		gender: {
@@ -75,6 +75,18 @@ module.exports = function(sequelize, DataTypes) {
 				model: 'utype',
 				key: 'idutype'
 			}
+		},
+		bussynes: {
+			type: DataTypes.STRING(255),
+			allowNull: true
+		},
+		nature: {
+			type: DataTypes.STRING(255),
+			allowNull: true
+		},
+		tp: {
+			type: DataTypes.STRING(255),
+			allowNull: true
 		},
 		createdAt: {
 			type: DataTypes.DATE,

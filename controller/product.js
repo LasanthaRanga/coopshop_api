@@ -64,3 +64,22 @@ exports.getAllProduct = (req, res, next) => {
     }
 }
 
+exports.addQty = (req, res, next) => {
+    console.log(req.body);
+    try {
+        stock.create({
+            product_idproduct: req.body.product_idproduct,
+            user_iduser: req.body.user_iduser,          
+            qty: req.body.qty,
+            allsale: req.body.allsale           
+        }).then(result => {
+            res.send(result);
+        });
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+}
+
+
