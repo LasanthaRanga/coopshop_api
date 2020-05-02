@@ -178,6 +178,25 @@ exports.getAddress = (req, res, next) => {
     }
 }
 
+exports.active = (req, res, next) => {
+    try {
+        user.findOne({
+            where: { iduser: req.body.uid }
+        }).then(user => {
+            user.update({
+                isactive: req.body.status
+            }).then(user => {
+                res.send(user);
+            });
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+}
+
+
+
 
 exports.getUserById = (req, res, next) => {
     try {

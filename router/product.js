@@ -56,10 +56,11 @@ router.post("/pic_upload", upload.single('attach'), (req, res, next) => {
 });
 
 
-router.post("/getAll", prodController.getAllProduct);
+// router.post("/getAll", prodController.getAllProduct);
 router.post("/regProd", prodController.regProd);
 router.post("/getImages", prodController.getProductImage);
 router.post("/addQty", prodController.addQty);
+router.post("/getAllByUser", prodController.getAllProductByUser);
 
 
 module.exports = router;

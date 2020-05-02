@@ -43,6 +43,7 @@ router.post("/getSellers", userController.getSellers);
 router.post("/emailVerify", userController.emailVerify);
 router.post("/addAddress", userController.addAddress);
 router.post("/getAddress", userController.getAddress);
+router.post("/active", userController.active);
 
 
 
