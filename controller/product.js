@@ -56,7 +56,7 @@ exports.getAllProductByUser = (req, res, next) => {
             " prodimage.url,prodimage.idprodimage,prodimage.`status`,stock.idstock,stock.product_idproduct,stock.user_iduser,stock.qty,stock.allsale,stock.retail, " +
             " stock.discount,stock.disrate,stock.m_date,stock.ex_date,stock.has_discount,stock.`status`,stock.other,stock.createdAt,stock.updatedAt " +
             " FROM product LEFT JOIN prodimage ON prodimage.product_idproduct=product.idproduct LEFT JOIN stock ON stock.product_idproduct=product.idproduct " +
-            " WHERE product.user_iduser=1 " +
+            " WHERE product.user_iduser= " + req.body.uid +
             " GROUP BY product.idproduct ORDER BY stock.idstock DESC ", (error, rows, fildData) => {
                 if (!error) {
                     res.send(rows);
