@@ -13,9 +13,11 @@ const multer = require('multer');
 var fs = require('fs');
 var appRoot = require('app-root-path');
 
-const uppath = "../coop.nutrilitesrilanka.com/uploads/product/";
+//const uppath = "../coop.nutrilitesrilanka.com/uploads/product/";
+const uppath = "D:/Project/COOP SHOP/uploads/product/";
 //const uppath = "./uploads/product/";
-const downpath = "https://coop.nutrilitesrilanka.com/uploads/product/";
+//const downpath = "https://coop.nutrilitesrilanka.com/uploads/product/";
+const downpath = "D:/Project/COOP SHOP/uploads/product/";
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -61,6 +63,7 @@ router.post("/regProd", prodController.regProd);
 router.post("/getImages", prodController.getProductImage);
 router.post("/addQty", prodController.addQty);
 router.post("/getAllByUser", prodController.getAllProductByUser);
+router.post("/getProductByID", prodController.getProductByID);
 
 
 module.exports = router;

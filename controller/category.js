@@ -150,3 +150,31 @@ exports.updateScat = (req, res, next) => {
         res.status(500).send(error);
     }
 }
+
+exports.getSelectedMcat = exports.login = (req, res, next) => {
+    try {
+        mycon.execute("select * from cat1 where idcat1 = " + req.body.cat1,
+            (error, rows, fildData) => {
+                if (!error) {
+                    res.send(rows);
+                }
+            });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+}
+
+exports.getSelectedScat = exports.login = (req, res, next) => {
+    try {
+        mycon.execute("select * from cat2 where idcat2 = " + req.body.cat2,
+            (error, rows, fildData) => {
+                if (!error) {
+                    res.send(rows);
+                }
+            });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+}

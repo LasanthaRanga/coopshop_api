@@ -11,6 +11,8 @@ router.post("/updateScat", checkAuth, categoryController.updateScat);
 router.post("/getAllMcat", categoryController.getAllMcat);
 router.post("/getAllScat", categoryController.getAllScat);
 router.post("/getSubCatByMcat", categoryController.getSubCatByMcat);
+router.post("/getSelectedMcat", categoryController.getSelectedMcat);
+router.post("/getSelectedScat", categoryController.getSelectedScat);
 
 
 module.exports = router;

@@ -68,6 +68,27 @@ exports.getAllProductByUser = (req, res, next) => {
     }
 }
 
+exports.getProductByID = (req, res, next) => {
+    try {
+        mycon.execute("SELECT product.idproduct, product.`name`, product.`code`, product.description, product.gender, product.`status`, product.others, " +
+            "product.rating, product.user_iduser, product.cat1_idcat1, product.cat2_idcat2, product.createdAt, product.updatedAt, " +
+            "product.name_s, product.description_s, prodimage.url, prodimage.idprodimage, prodimage.`status`, stock.idstock, " +
+            "stock.product_idproduct, stock.user_iduser, stock.qty, stock.allsale, stock.retail, stock.discount, stock.disrate, " +
+            "stock.m_date, stock.ex_date, stock.has_discount, stock.`status`, stock.other, stock.createdAt, stock.updatedAt " +
+            "FROM product LEFT JOIN prodimage ON prodimage.product_idproduct = product.idproduct " +
+            "LEFT JOIN stock ON stock.product_idproduct = product.idproduct " +
+            "WHERE product.idproduct =" + req.body.prodid + 
+            " GROUP BY product.idproduct ORDER BY stock.idstock DESC", (error, rows, fildData) => {
+                if (!error) {
+                    res.send(rows);
+                }
+            });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+}
+
 exports.addQty = (req, res, next) => {
     console.log(req.body);
     try {
