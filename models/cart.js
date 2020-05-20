@@ -16,6 +16,18 @@ module.exports = function(sequelize, DataTypes) {
 				key: 'iduser'
 			}
 		},
+		status: {
+			type: DataTypes.INTEGER(11),
+			allowNull: true
+		},
+		statusstring: {
+			type: DataTypes.STRING(255),
+			allowNull: true
+		},
+		total: {
+			type: "DOUBLE",
+			allowNull: true
+		},
 		createdAt: {
 			type: DataTypes.DATE,
 			allowNull: true

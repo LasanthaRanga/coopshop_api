@@ -73,11 +73,11 @@ exports.getProductByID = (req, res, next) => {
         mycon.execute("SELECT product.idproduct, product.`name`, product.`code`, product.description, product.gender, product.`status`, product.others, " +
             "product.rating, product.user_iduser, product.cat1_idcat1, product.cat2_idcat2, product.createdAt, product.updatedAt, " +
             "product.name_s, product.description_s, prodimage.url, prodimage.idprodimage, prodimage.`status`, stock.idstock, " +
-            "stock.product_idproduct, stock.user_iduser, stock.qty, stock.allsale, stock.retail, stock.discount, stock.disrate, " +
-            "stock.m_date, stock.ex_date, stock.has_discount, stock.`status`, stock.other, stock.createdAt, stock.updatedAt " +
+            "stock.product_idproduct, stock.user_iduser, stock.qty, stock.allsale, stock.selling,  stock.retail, stock.discount, stock.disrate,  " +
+            "stock.m_date, stock.ex_date, stock.has_discount, stock.`status` as ss, stock.other, stock.createdAt, stock.updatedAt " +
             "FROM product LEFT JOIN prodimage ON prodimage.product_idproduct = product.idproduct " +
             "LEFT JOIN stock ON stock.product_idproduct = product.idproduct " +
-            "WHERE product.idproduct =" + req.body.prodid + 
+            "WHERE product.idproduct =" + req.body.prodid +
             " GROUP BY product.idproduct ORDER BY stock.idstock DESC", (error, rows, fildData) => {
                 if (!error) {
                     res.send(rows);
@@ -107,4 +107,51 @@ exports.addQty = (req, res, next) => {
     }
 }
 
+exports.addPrices = (req, res, next) => {
+    try {
+        mycon.execute("UPDATE `stock` SET `retail`=" + req.body.retail + ",`selling`=" + req.body.selling + ",`discount`=" + req.body.discount + ",`disrate`=" + req.body.disrate + ",`has_discount`=" + req.body.has_discount + ",`status`=1 WHERE `idstock`=" + req.body.idstock + "", (error, rows, fildData) => {
+            if (!error) {
+                res.send(rows);
+            }
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+}
+
+exports.updateQty = (req, res, next) => {
+    try {
+        mycon.execute("UPDATE `stock` SET `qty` = "+req.body.qty+" WHERE `idstock` = " + req.body.idstock + "", (error, rows, fildData) => {
+            if (!error) {
+                res.send(rows);
+            }
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+}
+
+exports.getAllActiveProducts = (req, res, next) => {
+    try {
+        mycon.execute("SELECT product.idproduct, product.`name`, product.`code`, product.description, product.gender, "+
+        "product.`status`, product.others, product.rating, product.user_iduser, product.cat1_idcat1, "+
+        "product.cat2_idcat2, product.createdAt, product.updatedAt, product.name_s, "+
+        "product.description_s, prodimage.url, prodimage.idprodimage, prodimage.`status`, "+
+        "stock.idstock, stock.product_idproduct, stock.user_iduser, stock.qty, stock.allsale, "+
+        "stock.retail, stock.discount, stock.disrate, stock.selling, stock.m_date, stock.ex_date, "+
+        "stock.has_discount, stock.`status`, stock.other, stock.createdAt, stock.updatedAt "+
+        "FROM product LEFT JOIN prodimage ON prodimage.product_idproduct = product.idproduct "+
+        "INNER JOIN stock ON stock.product_idproduct = product.idproduct "+
+        "WHERE stock.`status` = 1 AND stock.qty > 0 GROUP BY product.idproduct ORDER BY stock.idstock DESC", (error, rows, fildData) => {
+            if (!error) {
+                res.send(rows);
+            }
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+}
 

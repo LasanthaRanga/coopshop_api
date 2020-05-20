@@ -37,6 +37,7 @@ app.options('*', cors(corsOptions));
 const userRouter = require('./router/user');
 const catRouter = require('./router/category_router');
 const productRouter = require('./router/product');
+const cartRouter = require('./router/cartRouter');
 
 
 
@@ -57,6 +58,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/user', userRouter);
 app.use('/cat', catRouter);
 app.use('/prod', productRouter),
+app.use('/cart', cartRouter);
 
 
 app.use((req, res, next) => {

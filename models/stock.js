@@ -36,6 +36,10 @@ module.exports = function(sequelize, DataTypes) {
 			type: "DOUBLE",
 			allowNull: true
 		},
+		selling: {
+			type: "DOUBLE",
+			allowNull: true
+		},
 		discount: {
 			type: "DOUBLE",
 			allowNull: true
