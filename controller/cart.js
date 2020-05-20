@@ -44,6 +44,10 @@ exports.addToCart = exports.login = (req, res, next) => {
                         cartid = rows[0].idcart;
                         console.log(cartid);
                         res.send(rows[0]);
+
+
+
+                        
                     } else {
                         //  res.send('null');
                         mycon.execute("INSERT INTO `cart` ( `user_iduser`, `status`, `statusstring`, `total`, `createdAt`, `updatedAt`) VALUES ( " + uid + ", 0, 'Pending', 0, '" + day + "', '" + day + "')", (e, r, f) => {
