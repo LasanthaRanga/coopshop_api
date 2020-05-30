@@ -12,7 +12,7 @@ const addController = require('../controller/add');
 const uppath = "../coop.nutrilitesrilanka.com/uploads/banar/";
 // const uppath = "D:/Project/COOP SHOP/uploads/banar/";
 const downpath = "https://coop.nutrilitesrilanka.com/uploads/banar/";
-// const downpath = "D:/Project/COOP SHOP/uploads/banar/";
+//const downpath = "D:/Project/COOP SHOP/uploads/banar/";
 
 
 const storage = multer.diskStorage({
@@ -21,7 +21,7 @@ const storage = multer.diskStorage({
         cb(null, uppath);
     },
     filename: function (req, file, cb) {
-        let date = dateFormat(new Date(), 'yyyymmddHHMMss_', 'en-US', '+0530');
+        let date = dateFormat(new Date(), 'yyyyMMddHHmmss_', 'en-US', '+0530');
         path = date + file.originalname;
         cb(null, path);
     }

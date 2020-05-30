@@ -25,7 +25,7 @@ const storage = multer.diskStorage({
         cb(null, uppath);
     },
     filename: function (req, file, cb) {
-        let date = dateFormat(new Date(), 'yyyymmddHHMMss_', 'en-US', '+0530');
+        let date = dateFormat(new Date(), 'yyyyMMddHHmmss_', 'en-US', '+0530');
         path = date + file.originalname;
         cb(null, path);
     }
