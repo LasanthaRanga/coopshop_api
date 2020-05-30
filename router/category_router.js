@@ -13,6 +13,6 @@ router.post("/getAllScat", categoryController.getAllScat);
 router.post("/getSubCatByMcat", categoryController.getSubCatByMcat);
 router.post("/getSelectedMcat", categoryController.getSelectedMcat);
 router.post("/getSelectedScat", categoryController.getSelectedScat);
-
+router.post("/getMcatRate", categoryController.getMcatRate);
 
 module.exports = router;

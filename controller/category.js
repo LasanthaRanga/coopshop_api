@@ -9,6 +9,7 @@ exports.addCategory = exports.login = (req, res, next) => {
         cat1.create({
             cat: req.body.cat,
             status: 1,
+            rate: req.body.rate,
             description: req.body.description,
             cat_sinhala: req.body.cat_sinhala
         }).then(result => {
@@ -95,6 +96,7 @@ exports.updateMcat = (req, res, next) => {
             cat1.update({
                 cat: req.body.cat,
                 status: 1,
+                rate: req.body.rate,
                 description: req.body.description,
                 cat_sinhala: req.body.cat_sinhala
             }).then(cat1 => {
@@ -168,6 +170,20 @@ exports.getSelectedMcat = exports.login = (req, res, next) => {
 exports.getSelectedScat = exports.login = (req, res, next) => {
     try {
         mycon.execute("select * from cat2 where idcat2 = " + req.body.cat2,
+            (error, rows, fildData) => {
+                if (!error) {
+                    res.send(rows);
+                }
+            });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+}
+
+exports.getMcatRate = exports.login = (req, res, next) => {
+    try {
+        mycon.execute("select * from cat1 where idcat1 = " + req.body.mcat,
             (error, rows, fildData) => {
                 if (!error) {
                     res.send(rows);

@@ -12,6 +12,10 @@ module.exports = function(sequelize, DataTypes) {
 			type: DataTypes.STRING(255),
 			allowNull: true
 		},
+		cat_sinhala: {
+			type: DataTypes.STRING(255),
+			allowNull: true
+		},
 		status: {
 			type: DataTypes.INTEGER(11),
 			allowNull: true
@@ -20,16 +24,16 @@ module.exports = function(sequelize, DataTypes) {
 			type: DataTypes.TEXT,
 			allowNull: true
 		},
+		rate: {
+			type: "DOUBLE",
+			allowNull: true
+		},
 		createdAt: {
 			type: DataTypes.DATE,
 			allowNull: true
 		},
 		updatedAt: {
 			type: DataTypes.DATE,
-			allowNull: true
-		},
-		cat_sinhala: {
-			type: DataTypes.STRING(255),
 			allowNull: true
 		}
 	}, {

@@ -147,21 +147,39 @@ exports.updateUser = (req, res, next) => {
 
 exports.addAddress = (req, res, next) => {
     try {
-        address.create({
-            user_iduser: req.body.user_iduser,
-            line1: req.body.line1,
-            line2: req.body.line2,
-            line3: req.body.line3,
-            postal_code: req.body.postal_code,
-            country: 'Sri Lanka'
-        }).then(result => {
-            res.send(result);
+        mycon.execute("UPDATE `address` SET `isdiliver` = 0 WHERE `user_iduser` = " + req.body.user_iduser, (e, r, f) => {
+            address.create({
+                user_iduser: req.body.user_iduser,
+                line1: req.body.line1,
+                line2: req.body.line2,
+                line3: req.body.line3,
+                postal_code: req.body.postal_code,
+                isdiliver: 1,
+                country: 'Sri Lanka'
+            }).then(result => {
+                res.send(result);
+            });
         });
     } catch (error) {
         console.log(error);
         res.status(500).send(error);
     }
 }
+
+exports.setAsDefaltAddress = (req, res, next) => {
+    try {
+        mycon.execute("UPDATE `address` SET `isdiliver` = 0 WHERE `user_iduser` = " + req.body.uid, (e, r, f) => {
+            mycon.execute("UPDATE `address` SET `isdiliver` = 1 WHERE `user_iduser` = '"+req.body.uid+"' and idaddress = "+ req.body.aid, (ee, rr, ff) => {
+                res.send(rr);
+            });
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+}
+
+
 
 exports.getAddress = (req, res, next) => {
     try {
@@ -240,9 +258,10 @@ exports.getPrivilages = (req, res, next) => {
 exports.getSellers = (req, res, next) => {
     try {
         let isactive = req.body.isactive;
+        let utype = req.body.utype;
         if (isactive === 0 || isactive == 1) {
             mycon.execute("SELECT `user`.iduser,`user`.`name`,`user`.email,`user`.mobile,`user`.branch,`user`.member,`user`.description,`user`.image,`user`.isactive,`user`.`status`,`user`.rating,`user`.nic,`user`.other1,`user`.other2,`user`.utype_idutype,`user`.createdAt,`user`.updatedAt FROM `user` " +
-                " WHERE `user`.utype_idutype=1 AND `user`.isactive=" + isactive,
+                " WHERE `user`.utype_idutype='" + utype + "' AND `user`.isactive=" + isactive,
                 (error, rows, fildData) => {
                     if (!error) {
                         res.send(rows);
@@ -250,7 +269,7 @@ exports.getSellers = (req, res, next) => {
                 });
         } else {
             mycon.execute("SELECT `user`.iduser,`user`.`name`,`user`.email,`user`.mobile,`user`.branch,`user`.member,`user`.description,`user`.image,`user`.isactive,`user`.`status`,`user`.rating,`user`.nic,`user`.other1,`user`.other2,`user`.utype_idutype,`user`.createdAt,`user`.updatedAt FROM `user` " +
-                " WHERE `user`.utype_idutype=1 ",
+                " WHERE `user`.utype_idutype= " + utype,
                 (error, rows, fildData) => {
                     if (!error) {
                         res.send(rows);

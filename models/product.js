@@ -75,6 +75,34 @@ module.exports = function(sequelize, DataTypes) {
 		description_s: {
 			type: DataTypes.TEXT,
 			allowNull: true
+		},
+		qty: {
+			type: DataTypes.INTEGER(11),
+			allowNull: true
+		},
+		price: {
+			type: "DOUBLE",
+			allowNull: true
+		},
+		disrate: {
+			type: "DOUBLE",
+			allowNull: true
+		},
+		disval: {
+			type: "DOUBLE",
+			allowNull: true
+		},
+		selling: {
+			type: "DOUBLE",
+			allowNull: true
+		},
+		netprice: {
+			type: "DOUBLE",
+			allowNull: true
+		},
+		commition: {
+			type: "DOUBLE",
+			allowNull: true
 		}
 	}, {
 		tableName: 'product'

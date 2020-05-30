@@ -38,6 +38,7 @@ const userRouter = require('./router/user');
 const catRouter = require('./router/category_router');
 const productRouter = require('./router/product');
 const cartRouter = require('./router/cartRouter');
+const addRouter = require('./router/addRouter');
 
 
 
@@ -59,6 +60,7 @@ app.use('/user', userRouter);
 app.use('/cat', catRouter);
 app.use('/prod', productRouter),
 app.use('/cart', cartRouter);
+app.use('/add', addRouter);
 
 
 app.use((req, res, next) => {

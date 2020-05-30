@@ -14,10 +14,10 @@ var fs = require('fs');
 var appRoot = require('app-root-path');
 
 const uppath = "../coop.nutrilitesrilanka.com/uploads/product/";
-//const uppath = "D:/Project/COOP SHOP/uploads/product/";
+// const uppath = "D:/Project/COOP SHOP/uploads/product/";
 //const uppath = "./uploads/product/";
 const downpath = "https://coop.nutrilitesrilanka.com/uploads/product/";
-//const downpath = "D:/Project/COOP SHOP/uploads/product/";
+// const downpath = "D:/Project/COOP SHOP/uploads/product/";
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -25,7 +25,7 @@ const storage = multer.diskStorage({
         cb(null, uppath);
     },
     filename: function (req, file, cb) {
-        let date = dateFormat(new Date(), 'yyyyMMddHHmmss_', 'en-US', '+0530');
+        let date = dateFormat(new Date(), 'yyyymmddHHMMss_', 'en-US', '+0530');
         path = date + file.originalname;
         cb(null, path);
     }
