@@ -76,6 +76,7 @@ exports.getAllProductByUser = (req, res, next) => {
 }
 
 exports.getProductByID = (req, res, next) => {
+    
     try {
         mycon.execute("SELECT product.idproduct,product.`name`,product.`code`,product.description,product.gender,product.`status`,product.others," +
             "product.rating,product.user_iduser,product.cat1_idcat1,product.cat2_idcat2,product.createdAt,product.updatedAt,product.name_s," +
