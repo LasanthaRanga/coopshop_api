@@ -64,9 +64,9 @@ router.post("/getImages", prodController.getProductImage);
 router.post("/addQty", prodController.addQty);
 router.post("/getAllByUser", prodController.getAllProductByUser);
 router.post("/getProductByID", prodController.getProductByID);
-router.post("/addPrices", prodController.addPrices);
-router.post("/updateQty", prodController.updateQty);
-router.post("/getAllActiveProd", prodController.getAllActiveProducts);
+// router.post("/addPrices", prodController.addPrices);
+// router.post("/updateQty", prodController.updateQty);
+ router.post("/getAllActiveProd", prodController.getAllActiveProducts);
 
 
 module.exports = router;

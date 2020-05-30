@@ -2,7 +2,7 @@ const scon = require('../util/sequl');
 const mycon = require('../util/conn');
 var dateFormat = require('dateformat');
 
-exports.getAllAdd = exports.login = (req, res, next) => {
+exports.getAllAdd =  (req, res, next) => {
     try {
         mycon.execute("SELECT * FROM `add`",
             (error, rows, fildData) => {
@@ -16,7 +16,7 @@ exports.getAllAdd = exports.login = (req, res, next) => {
     }
 }
 
-exports.addTitle = exports.login = (req, res, next) => {
+exports.addTitle = (req, res, next) => {
     console.log(req.body.title + req.body.des + req.body.id);
     let date = dateFormat(new Date(), 'yyyy-mm-dd', 'en-US', '+0530');
     try {
