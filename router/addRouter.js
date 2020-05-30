@@ -47,6 +47,6 @@ router.post("/pic_upload", upload.single('attach'), (req, res, next) => {
 });
 
 router.post("/addTitle", addController.addTitle);
-
+router.post("/gatAdd", addController.getAllAdd);
 
 module.exports = router;
