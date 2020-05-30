@@ -4,7 +4,7 @@ var dateFormat = require('dateformat');
 
 exports.getAllAdd = exports.login = (req, res, next) => {
     try {
-        mycon.execute("select * from add",
+        mycon.execute("SELECT * FROM `add`",
             (error, rows, fildData) => {
                 if (!error) {
                     res.send(rows);
