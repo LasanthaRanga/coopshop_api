@@ -256,6 +256,9 @@ exports.getUserById = (req, res, next) => {
 
 
 exports.getPrivilages = (req, res, next) => {
+    console.log('==========================================privilages=============================');
+    console.log(req.headers)
+    console.log('==========================================privilages=============================');
     try {
         console.log('user ' + req.body.usertype);
         mycon.execute("SELECT privilages.id,privilages.title,privilages.url,privilages.icon,privilages.`status`,privilages.utype FROM privilages WHERE privilages.`status`=1 AND privilages.utype=" + req.body.usertype,
