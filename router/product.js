@@ -16,7 +16,7 @@ var appRoot = require('app-root-path');
 const uppath = "../public_html/uploads/product/";
 // const uppath = "D:/Project/COOP SHOP/uploads/product/";
 //const uppath = "./uploads/product/";
-const downpath = "http://coopshop.lk/uploads/product/";
+const downpath = "https://www.coopshop.lk/uploads/product/";
 // const downpath = "D:/Project/COOP SHOP/uploads/product/";
 
 const storage = multer.diskStorage({

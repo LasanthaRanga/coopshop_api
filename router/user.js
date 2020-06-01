@@ -15,7 +15,7 @@ var appRoot = require('app-root-path');
 
  const uppath = "../public_html/uploads/profile/";
 //ෆෆconst uppath = "./uploads/profile/";
-const downpath = "http://coopshop.lk/uploads/profile/";
+const downpath = "https://www.coopshop.lk/uploads/profile/";
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
