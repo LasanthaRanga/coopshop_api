@@ -13,7 +13,7 @@ var fs = require('fs');
 var appRoot = require('app-root-path');
 
 
- const uppath = "../coopshop.lk/uploads/profile/";
+ const uppath = "../public_html/uploads/profile/";
 //ෆෆconst uppath = "./uploads/profile/";
 const downpath = "http://coopshop.lk/uploads/profile/";
 
