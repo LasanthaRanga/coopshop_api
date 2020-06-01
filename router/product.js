@@ -13,10 +13,10 @@ const multer = require('multer');
 var fs = require('fs');
 var appRoot = require('app-root-path');
 
-const uppath = "../coop.nutrilitesrilanka.com/uploads/product/";
+const uppath = "../coopshop.lk/uploads/product/";
 // const uppath = "D:/Project/COOP SHOP/uploads/product/";
 //const uppath = "./uploads/product/";
-const downpath = "https://coop.nutrilitesrilanka.com/uploads/product/";
+const downpath = "http://coopshop.lk/uploads/product/";
 // const downpath = "D:/Project/COOP SHOP/uploads/product/";
 
 const storage = multer.diskStorage({

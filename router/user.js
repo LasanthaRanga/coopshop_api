@@ -13,9 +13,9 @@ var fs = require('fs');
 var appRoot = require('app-root-path');
 
 
- const uppath = "../coop.nutrilitesrilanka.com/uploads/profile/";
+ const uppath = "../coopshop.lk/uploads/profile/";
 //ෆෆconst uppath = "./uploads/profile/";
-const downpath = "https://coop.nutrilitesrilanka.com/uploads/profile/";
+const downpath = "http://coopshop.lk/uploads/profile/";
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {

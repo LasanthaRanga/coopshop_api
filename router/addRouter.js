@@ -9,9 +9,9 @@ var fs = require('fs');
 var appRoot = require('app-root-path');
 const addController = require('../controller/add');
 
-const uppath = "../coop.nutrilitesrilanka.com/uploads/banar/";
+const uppath = "../coopshop.lk/uploads/banar/";
 // const uppath = "D:/Project/COOP SHOP/uploads/banar/";
-const downpath = "https://coop.nutrilitesrilanka.com/uploads/banar/";
+const downpath = "http://coopshop.lk/uploads/banar/";
 //const downpath = "D:/Project/COOP SHOP/uploads/banar/";
 
 
