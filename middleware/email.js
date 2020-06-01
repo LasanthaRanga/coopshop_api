@@ -6,7 +6,7 @@ var transporter = nodemailer.createTransport({
     service: 'gmail',
     host: 'smtp.gmail.com',
     port: 587,
-    secure: false, // use SSL
+    secure: true, // use SSL
     auth: {
         user: 'coopshopapp@gmail.com',
         pass: 'Lasa2012'
