@@ -58,7 +58,7 @@ exports.sellerSignUp = (req, res, next) => {
                                 message: 'Welcome to COOP SHOP. Your Verification code is : ' + val,
                                 to: req.body.email
                             };
-                            // mail.emailSend(param);
+                            mail.emailSend(param);
                             res.send(result);
                         });
                     }
@@ -169,7 +169,7 @@ exports.addAddress = (req, res, next) => {
 exports.setAsDefaltAddress = (req, res, next) => {
     try {
         mycon.execute("UPDATE `address` SET `isdiliver` = 0 WHERE `user_iduser` = " + req.body.uid, (e, r, f) => {
-            mycon.execute("UPDATE `address` SET `isdiliver` = 1 WHERE `user_iduser` = '"+req.body.uid+"' and idaddress = "+ req.body.aid, (ee, rr, ff) => {
+            mycon.execute("UPDATE `address` SET `isdiliver` = 1 WHERE `user_iduser` = '" + req.body.uid + "' and idaddress = " + req.body.aid, (ee, rr, ff) => {
                 res.send(rr);
             });
         });
@@ -321,6 +321,6 @@ exports.emailVerify = (req, res, next) => {
 
 exports.mail = (req, res, next) => {
     mail.emailSend(req, res, next);
-    mail.smsSend(req, res, next);
+   // mail.smsSend(req, res, next);
     res.send({ 'OK': 'DONE' });
 }
