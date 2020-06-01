@@ -196,6 +196,21 @@ exports.getAddress = (req, res, next) => {
     }
 }
 
+exports.getDefaultAddress = (req, res, next) => {
+    try {
+        mycon.execute("SELECT address.idaddress,address.line1,address.line2,address.line3,address.postal_code,address.country,address.x,address.y, " +
+            "address.`status`,address.isdiliver,address.user_iduser,address.createdAt,address.updatedAt FROM address WHERE address.isdiliver=1 AND address.user_iduser=" + req.body.uid,
+            (error, rows, fildData) => {
+                if (!error) {
+                    res.send(rows[0]);
+                }
+            });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+}
+
 exports.active = (req, res, next) => {
     try {
         user.findOne({

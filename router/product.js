@@ -67,6 +67,7 @@ router.post("/getProductByID", prodController.getProductByID);
 // router.post("/addPrices", prodController.addPrices);
 // router.post("/updateQty", prodController.updateQty);
  router.post("/getAllActiveProd", prodController.getAllActiveProducts);
+ router.post("/activateProd", prodController.activateProd);
 
 
 module.exports = router;
