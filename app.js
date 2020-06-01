@@ -10,7 +10,8 @@ const allowedOrigins = [
     'ionic://localhost',
     'http://localhost',
     'http://localhost:8080',
-    'http://localhost:8100'
+    'http://localhost:8100',
+    'https://test.coopshop.lk'
 ];
 
 // Reflect the origin if it's in the allowed list or not defined (cURL, Postman, etc.)
@@ -59,7 +60,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/user', userRouter);
 app.use('/cat', catRouter);
 app.use('/prod', productRouter),
-app.use('/cart', cartRouter);
+    app.use('/cart', cartRouter);
 app.use('/add', addRouter);
 
 
