@@ -14,7 +14,7 @@ const allowedOrigins = [
     'http://localhost:8100',
     'http://test.coopshop.lk',
     'https://test.coopshop.lk'
-    
+
 ];
 
 // Reflect the origin if it's in the allowed list or not defined (cURL, Postman, etc.)
@@ -43,6 +43,7 @@ const catRouter = require('./router/category_router');
 const productRouter = require('./router/product');
 const cartRouter = require('./router/cartRouter');
 const addRouter = require('./router/addRouter');
+const test = require('./router/test');
 
 
 
@@ -62,9 +63,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/user', userRouter);
 app.use('/cat', catRouter);
-app.use('/prod', productRouter),
-    app.use('/cart', cartRouter);
+app.use('/prod', productRouter);
+app.use('/cart', cartRouter);
 app.use('/add', addRouter);
+app.use('/test', test);
 
 
 app.use((req, res, next) => {
