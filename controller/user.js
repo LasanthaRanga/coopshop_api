@@ -72,6 +72,58 @@ exports.sellerSignUp = (req, res, next) => {
     }
 }
 
+
+
+exports.customerSignUp = (req, res, next) => {
+    try {
+        var val = Math.floor(1000 + Math.random() * 9000);
+
+        user.findOne({
+            where: { email: req.body.email }
+        }).then(u => {
+            if (u) {
+                console.log(u);
+                return res.status(409).json({
+                    error: 'This Email Address Alrady Exsist Please Login Or Register With Other Email'
+                });
+            } else {
+                bcript.hash(req.body.pword, 10, (err, hash) => {
+                    if (err) {
+                        return status(500).json({ error: err });
+                    } else {
+                        user.create({
+                            name: req.body.name,
+                            email: req.body.email,
+                            pword: hash,
+                            mobile: req.body.mobile,
+                            utype_idutype: 3,
+                            status: 0,
+                            isactive: 0,
+                            other1: val
+                        }).then(result => {
+                            param = {
+                                subject: 'COOP SHOP Verification',
+                                message: 'Welcome to COOP SHOP. Your Verification code is : ' + val,
+                                to: req.body.email
+                            };
+                            mail.emailSend(param);
+                            res.send(result);
+                        });
+                    }
+                });
+            }
+        })
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+}
+
+
+
+
+
 exports.loginSeller = (req, res, next) => {
     try {
         user.findOne({

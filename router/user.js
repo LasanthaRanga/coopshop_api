@@ -13,7 +13,7 @@ var fs = require('fs');
 var appRoot = require('app-root-path');
 
 
- const uppath = "../public_html/uploads/profile/";
+const uppath = "../public_html/uploads/profile/";
 //ෆෆconst uppath = "./uploads/profile/";
 const downpath = "https://www.coopshop.lk/uploads/profile/";
 
@@ -35,6 +35,7 @@ const upload = multer({ storage: storage });
 
 router.get("/login", userController.login);
 router.post("/signup_seller", userController.sellerSignUp);
+router.post("/customer_SignUp", userController.customerSignUp);
 router.post("/login_seller", userController.loginSeller);
 router.post("/update_user", userController.updateUser);
 router.post("/getUserById", checkAuth, userController.getUserById);
