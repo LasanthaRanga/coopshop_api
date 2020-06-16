@@ -61,7 +61,7 @@ exports.sellerSignUp = (req, res, next) => {
                                 mob: req.body.mobile
                             };
                             mail.smsSend(param);
-                            mail.emailSend(param);
+                         //   mail.emailSend(param);
                             res.send(result);
                         });
                     }
@@ -111,7 +111,7 @@ exports.customerSignUp = (req, res, next) => {
                                 mob: req.body.mobile
                             };
                             mail.smsSend(param);
-                            mail.emailSend(param);
+                          //  mail.emailSend(param);
                             res.send(result);
                         });
                     }
