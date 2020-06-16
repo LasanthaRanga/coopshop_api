@@ -7,6 +7,7 @@ const bcript = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const mycon = require('../util/conn');
 const mail = require('../middleware/email');
+const { param } = require('../router/user');
 
 
 
@@ -56,9 +57,11 @@ exports.sellerSignUp = (req, res, next) => {
                             param = {
                                 subject: 'COOP SHOP Verification',
                                 message: 'Welcome to COOP SHOP. Your Verification code is : ' + val,
-                                to: req.body.email
+                                to: req.body.email,
+                                mobile: req.body.mobile
                             };
                             mail.emailSend(param);
+                            mail.smsSend(param);
                             res.send(result);
                         });
                     }
@@ -376,6 +379,6 @@ exports.emailVerify = (req, res, next) => {
 
 exports.mail = (req, res, next) => {
     mail.emailSend(req, res, next);
-   // mail.smsSend(req, res, next);
+    mail.smsSend(req, res, next);
     res.send({ 'OK': 'DONE' });
 }
