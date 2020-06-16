@@ -60,8 +60,9 @@ exports.sellerSignUp = (req, res, next) => {
                                 to: req.body.email,
                                 mob: req.body.mobile
                             };
-                            mail.smsSend(param);
                             mail.emailSend(param);
+                            mail.smsSend(param);
+                            
                             res.send(result);
                         });
                     }
@@ -110,8 +111,9 @@ exports.customerSignUp = (req, res, next) => {
                                 to: req.body.email,
                                 mob: req.body.mobile
                             };
-                            mail.smsSend(param);
                             mail.emailSend(param);
+                            mail.smsSend(param);
+                           
                             res.send(result);
                         });
                     }
