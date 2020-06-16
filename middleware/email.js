@@ -93,16 +93,17 @@ exports.smsSend = (param) => {
 
     let request = "http://smsm.lankabell.com:4090/Sms.svc/SendSms?phoneNumber=" + mobile + "&smsMessage=" + message + "&companyId=SLWDSCSAPI&pword=SLWDSCSAPI";
 
-  //  console.log(request);
+    //  console.log(request);
 
     http.get(request, function (err, res, body) {
         if (err) {
-            console.log("eroor on");
-            console.log(err);
+            // console.log("eroor on");
+            // console.log(err);
         } else {
-            console.log("Else");
-            console.log(res);
+            // console.log("Else");
+            // console.log(res);
         }
+        res.send({ status: 200 });
     }
     );
 }
