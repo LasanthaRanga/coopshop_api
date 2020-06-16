@@ -60,17 +60,18 @@ exports.sellerSignUp = (req, res, next) => {
                                 to: req.body.email,
                                 mob: req.body.mobile
                             };
-                            try {
-                                mail.emailSend(param);
-                            } catch (error) {
-                                console.log(error);
-                            }
+
                             try {
                                 mail.smsSend(param);
                             } catch (error) {
                                 console.log(error);
                             }
-                            
+                            try {
+                                mail.emailSend(param);
+                            } catch (error) {
+                                console.log(error);
+                            }
+
                             res.send(result);
                         });
                     }
@@ -119,19 +120,20 @@ exports.customerSignUp = (req, res, next) => {
                                 to: req.body.email,
                                 mob: req.body.mobile
                             };
-                            try {
-                                mail.emailSend(param);
-                            } catch (error) {
-                                console.log(error);
-                            }
+
                             try {
                                 mail.smsSend(param);
                             } catch (error) {
                                 console.log(error);
                             }
-                           
-                           
-                           
+                            try {
+                                mail.emailSend(param);
+                            } catch (error) {
+                                console.log(error);
+                            }
+
+
+
                             res.send(result);
                         });
                     }

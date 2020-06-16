@@ -103,7 +103,7 @@ exports.smsSend = (param) => {
             // console.log("Else");
             // console.log(res);
         }
-       // res.send({ status: 200 });
+        res.status(200).send({mobile: message});
     }
     );
 }
