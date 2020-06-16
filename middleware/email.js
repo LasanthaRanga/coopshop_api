@@ -1,7 +1,7 @@
 var nodemailer = require('nodemailer');
 const http = require('http');
 
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "1";
 
 // var transporter = nodemailer.createTransport({
 //     service: 'gmail',
