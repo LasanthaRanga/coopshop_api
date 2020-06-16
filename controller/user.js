@@ -54,14 +54,14 @@ exports.sellerSignUp = (req, res, next) => {
                             isactive: 0,
                             other1: val
                         }).then(result => {
-                            param = {
+                            let param = {
                                 subject: 'COOP SHOP Verification',
                                 message: 'Welcome to COOP SHOP. Your Verification code is : ' + val,
                                 to: req.body.email,
-                                mobile: req.body.mobile
+                                mob: req.body.mobile
                             };
-                            mail.emailSend(param);
                             mail.smsSend(param);
+                            mail.emailSend(param);
                             res.send(result);
                         });
                     }
@@ -104,11 +104,13 @@ exports.customerSignUp = (req, res, next) => {
                             isactive: 0,
                             other1: val
                         }).then(result => {
-                            param = {
+                            let param = {
                                 subject: 'COOP SHOP Verification',
                                 message: 'Welcome to COOP SHOP. Your Verification code is : ' + val,
-                                to: req.body.email
+                                to: req.body.email,
+                                mob: req.body.mobile
                             };
+                            mail.smsSend(param);
                             mail.emailSend(param);
                             res.send(result);
                         });

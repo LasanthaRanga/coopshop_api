@@ -75,9 +75,9 @@ exports.emailSend = (param) => {
 exports.smsSend = (param) => {
     let message = param.message;
     let val = "0000";
-    let mobile = param.mobile;
-    let uname = SLWDSCSAPI;
-    let pword = SLWDSCSAPI;
+    let mobile = param.mob;
+    let uname = 'SLWDSCSAPI';
+    let pword = 'SLWDSCSAPI';
 
     // http.get("http://www.textit.biz/sendmsg/index.php?id=94767365725&password=1548&text=" + message + val + "&to=" + mobile + "&from=MC.Kurunegala"
     //     , function (err, res, body) {
@@ -91,15 +91,18 @@ exports.smsSend = (param) => {
     //     }
     // );
 
-    http.get("http://smsm.lankabell.com:4090/Sms.svc/SendSms?phoneNumber='"+mobile+"'&smsMessage='"+message+"'&companyId='"+uname+"'&pword='"+pword+"'"
-        , function (err, res, body) {
-            if (err) {
-                console.log("eroor on");
-                console.log(err);
-            } else {
-                console.log("Else");
-                console.log(res);
-            }
+    let request = "http://smsm.lankabell.com:4090/Sms.svc/SendSms?phoneNumber=" + mobile + "&smsMessage=" + message + "&companyId=SLWDSCSAPI&pword=SLWDSCSAPI";
+
+  //  console.log(request);
+
+    http.get(request, function (err, res, body) {
+        if (err) {
+            console.log("eroor on");
+            console.log(err);
+        } else {
+            console.log("Else");
+            console.log(res);
         }
+    }
     );
 }
