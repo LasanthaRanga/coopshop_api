@@ -28,7 +28,8 @@ exports.regProd = (req, res, next) => {
             disval: req.body.disVal,
             selling: req.body.selling,
             netprice: req.body.netprice,
-            commition: req.body.commition
+            commition: req.body.commition,
+            weight: req.body.weight
         }).then(result => {
             res.send(result);
         });
@@ -61,7 +62,7 @@ exports.getAllProductByUser = (req, res, next) => {
     try {
         mycon.execute("SELECT product.idproduct,product.`name`,product.`code`,product.description,product.gender,product.`status`," +
             "product.others,product.rating,product.user_iduser,product.cat1_idcat1,product.cat2_idcat2,product.createdAt," +
-            "product.updatedAt,product.name_s,product.description_s,product.qty,product.price,product.disrate,product.disval," +
+            "product.updatedAt,product.name_s,product.description_s,product.qty,product.price,product.disrate,product.disval,product.weight," +
             "product.selling,product.netprice,product.commition,prodimage.url " +
             "FROM product LEFT JOIN prodimage ON prodimage.product_idproduct=product.idproduct " +
             "WHERE product.user_iduser = " + req.body.uid +
@@ -81,7 +82,7 @@ exports.getProductByID = (req, res, next) => {
     try {
         mycon.execute("SELECT product.idproduct,product.`name`,product.`code`,product.description,product.gender,product.`status`,product.others," +
             "product.rating,product.user_iduser,product.cat1_idcat1,product.cat2_idcat2,product.createdAt,product.updatedAt,product.name_s," +
-            "product.description_s,product.qty,product.price,product.disrate,product.disval,product.selling,product.netprice,product.commition," +
+            "product.description_s,product.qty,product.price,product.disrate,product.disval,product.selling,product.netprice,product.commition,product.weight," +
             "prodimage.url FROM product LEFT JOIN prodimage ON prodimage.product_idproduct=product.idproduct WHERE " +
             "product.idproduct= " + req.body.prodid +
             " GROUP BY product.idproduct", (error, rows, fildData) => {
@@ -140,7 +141,7 @@ exports.getAllActiveProducts = (req, res, next) => {
         mycon.execute("SELECT product.idproduct,product.`name`,product.`code`,product.description,product.gender,product.`status`," +
             "product.others,product.rating,product.user_iduser,product.cat1_idcat1,product.cat2_idcat2,product.createdAt," +
             "product.updatedAt,product.name_s,product.description_s,product.qty,product.price,product.disrate,product.disval," +
-            "product.selling,product.netprice,product.commition,prodimage.url FROM product " +
+            "product.selling,product.netprice,product.commition,product.weight,prodimage.url FROM product " +
             "LEFT JOIN prodimage ON prodimage.product_idproduct=product.idproduct WHERE product.`status`=1 " +
             "GROUP BY product.idproduct ORDER BY product.rating DESC", (error, rows, fildData) => {
                 if (!error) {

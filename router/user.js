@@ -47,6 +47,9 @@ router.post("/getAddress", userController.getAddress);
 router.post("/getDefaultAddress", userController.getDefaultAddress);
 router.post("/setDefault", userController.setAsDefaltAddress);
 router.post("/active", userController.active);
+router.post("/getDistrics", userController.getDistrics);
+router.post("/getCitys", userController.getCitys);
+router.post("/getDRate", userController.getDRate);
 
 
 

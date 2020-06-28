@@ -401,6 +401,61 @@ exports.emailVerify = (req, res, next) => {
     }
 }
 
+
+exports.getDistrics = (req, res, next) => {
+    try {
+        mycon.execute("SELECT distric.iddistric, distric.distric_sinhala, distric.distric_english FROM distric",
+            (error, rows, fildData) => {
+                if (!error) {
+                    res.send(rows);
+                }
+            });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+}
+
+exports.getCitys = (req, res, next) => {
+    try {
+        mycon.execute("SELECT city.idcity,city.city_sinhala,city.city_english,city.distric_iddistric,city.drate_iddrate FROM city WHERE city.distric_iddistric="+req.body.iddistric,
+            (error, rows, fildData) => {
+                if (!error) {
+                    res.send(rows);
+                }
+            });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+}
+
+
+exports.getDRate = (req, res, next) => {
+    try {
+        mycon.execute("SELECT drate.iddrate,drate.type,drate.firstkg,drate.addkg FROM drate WHERE drate.iddrate="+req.body.drate_iddrate,
+            (error, rows, fildData) => {
+                if (!error) {
+                    res.send(rows);
+                }
+            });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
 exports.mail = (req, res, next) => {
     mail.emailSend(req, res, next);
     mail.smsSend(req, res, next);

@@ -108,7 +108,7 @@ exports.getCartByUser = (req, res, next) => {
             + "carthasprod.oneprice,carthasprod.allprice,carthasprod.diliverstatus,carthasprod.diliverstatusstring,product.idproduct,product.`name`,product."
             + "`code`,product.description,product.gender,product.others,product.rating,product.cat1_idcat1,product.cat2_idcat2,product.name_s,product."
             + "description_s,product.qty,product.price,product.disrate,product.disval,product.selling,product.netprice,product.commition,prodimage.url,product."
-            + "`status`,product.user_iduser FROM cart INNER JOIN carthasprod ON carthasprod.cartid=cart.idcart INNER JOIN product ON carthasprod.prodid=product."
+            + "`status`,product.user_iduser, product.weight FROM cart INNER JOIN carthasprod ON carthasprod.cartid=cart.idcart INNER JOIN product ON carthasprod.prodid=product."
             + "idproduct LEFT JOIN prodimage ON prodimage.product_idproduct=product.idproduct WHERE cart.`status`=0 AND cart.user_iduser=" + uid, (er, ro, fi) => {
                 if (!er) {
                     res.send(ro);

@@ -103,6 +103,10 @@ module.exports = function(sequelize, DataTypes) {
 		commition: {
 			type: "DOUBLE",
 			allowNull: true
+		},
+		weight: {
+			type: "DOUBLE",
+			allowNull: true
 		}
 	}, {
 		tableName: 'product'
