@@ -418,7 +418,7 @@ exports.getDistrics = (req, res, next) => {
 
 exports.getCitys = (req, res, next) => {
     try {
-        mycon.execute("SELECT city.idcity,city.city_sinhala,city.city_english,city.distric_iddistric,city.drate_iddrate FROM city WHERE city.distric_iddistric="+req.body.iddistric,
+        mycon.execute("SELECT city.idcity,city.city_sinhala,city.city_english,city.distric_iddistric,city.drate_iddrate FROM city WHERE city.distric_iddistric=" + req.body.iddistric,
             (error, rows, fildData) => {
                 if (!error) {
                     res.send(rows);
@@ -433,7 +433,7 @@ exports.getCitys = (req, res, next) => {
 
 exports.getDRate = (req, res, next) => {
     try {
-        mycon.execute("SELECT drate.iddrate,drate.type,drate.firstkg,drate.addkg FROM drate WHERE drate.iddrate="+req.body.drate_iddrate,
+        mycon.execute("SELECT drate.iddrate,drate.type,drate.firstkg,drate.addkg FROM drate WHERE drate.iddrate=" + req.body.drate_iddrate,
             (error, rows, fildData) => {
                 if (!error) {
                     res.send(rows);
@@ -445,6 +445,22 @@ exports.getDRate = (req, res, next) => {
     }
 }
 
+
+exports.cartProductCount = (req, res, next) => {
+    try {
+        mycon.execute("SELECT Sum(carthasprod.qty) AS qty,cart.idcart,cart.user_iduser,cart.`status` FROM cart " +
+            " INNER JOIN carthasprod ON carthasprod.cartid=cart.idcart WHERE cart.user_iduser= " + req.body.uid +
+            " AND cart.`status`=0 GROUP BY cart.idcart",
+            (error, rows, fildData) => {
+                if (!error) {
+                    res.send(rows);
+                }
+            });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+}
 
 
 

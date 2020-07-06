@@ -50,6 +50,7 @@ router.post("/active", userController.active);
 router.post("/getDistrics", userController.getDistrics);
 router.post("/getCitys", userController.getCitys);
 router.post("/getDRate", userController.getDRate);
+router.post("/getQty", userController.cartProductCount);
 
 
 
