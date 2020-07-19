@@ -10,6 +10,7 @@ const bcript = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const mail = require('../middleware/email');
 
+
 exports.getSubCatByMcat = exports.login = (req, res, next) => {
 
     try {
@@ -109,7 +110,7 @@ exports.getCartByUser = (req, res, next) => {
             + "`code`,product.description,product.gender,product.others,product.rating,product.cat1_idcat1,product.cat2_idcat2,product.name_s,product."
             + "description_s,product.qty,product.price,product.disrate,product.disval,product.selling,product.netprice,product.commition,prodimage.url,product."
             + "`status`,product.user_iduser, product.weight FROM cart INNER JOIN carthasprod ON carthasprod.cartid=cart.idcart INNER JOIN product ON carthasprod.prodid=product."
-            + "idproduct LEFT JOIN prodimage ON prodimage.product_idproduct=product.idproduct WHERE cart.`status`=0 AND cart.user_iduser=" + uid+ " GROUP BY product.idproduct", (er, ro, fi) => {
+            + "idproduct LEFT JOIN prodimage ON prodimage.product_idproduct=product.idproduct WHERE cart.`status`=0 AND cart.user_iduser=" + uid + " GROUP BY product.idproduct", (er, ro, fi) => {
                 if (!er) {
                     res.send(ro);
                 } else {
@@ -151,6 +152,63 @@ exports.removeFromCart = (req, res, next) => {
             } else {
                 console.log(er);
                 res.send(er);
+            }
+        });
+    } catch (e) {
+        console.log(e);
+        res.status(500).send(e);
+    }
+}
+
+
+exports.confirm = (req, res, next) => {
+    let uid = req.body.uid;
+    try {
+        mycon.execute("UPDATE `cart` SET `status`=1,`statusstring`='Confirm' WHERE `idcart`=" + req.body.idCart, (er, ro, fi) => {
+            if (!er) {
+                res.send(ro);
+            } else {
+                console.log(er);
+                res.send(er);
+            }
+        });
+    } catch (e) {
+        console.log(e);
+        res.status(500).send(e);
+    }
+}
+
+exports.addOder = (req, res, next) => {
+    try {
+        var day = dateFormat(new Date(), "yyyy-mm-dd h:MM:ss");
+        let sellerid = 0;
+        let sellerMob = '';
+        let sellerEmail = '';
+        mycon.execute("SELECT product.user_iduser,`user`.`name`,`user`.email,`user`.mobile FROM product INNER JOIN `user` ON product.user_iduser=`user`.iduser WHERE product.idproduct=" + req.body.prod_id, (e, r, n) => {
+            if (!e) {
+                sellerid = r[0].user_iduser;
+                sellerMob = r[0].mobile;
+                sellerEmail = r[0].email;
+                mycon.execute("INSERT INTO `oder`  " +
+                    " (`cart_id`,`cus_id`,`seller_id`,`prod_id`,`qty`,`confirm_date`,`status`,`status_text`) VALUES " +
+                    " ('" + req.body.cart_id + "','" + req.body.cus_id + "','" + sellerid + "','" + req.body.prod_id + "','" + req.body.qty + "','" + day + "',1,'Oder confirm')", (er, ro, fi) => {
+                        if (!er) {
+                            let param = {
+                                subject: 'COOP SHOP Oder',
+                                message: 'you have an oder please diliver it now ',
+                                to: sellerEmail,
+                                mob: sellerMob
+                            };
+                            mail.smsSend(param);
+                            res.send(ro);
+                        } else {
+                            console.log(er);
+                            res.send(er);
+                        }
+                    });
+            } else {
+                console.log(e);
+                res.send(e);
             }
         });
     } catch (e) {

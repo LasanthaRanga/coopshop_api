@@ -7,10 +7,7 @@ const bcript = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const mycon = require('../util/conn');
 const mail = require('../middleware/email');
-const { param } = require('../router/user');
-
-
-
+const {param} = require('../router/user');
 
 
 exports.picupload = exports.login = (req, res, next) => {
@@ -32,7 +29,7 @@ exports.sellerSignUp = (req, res, next) => {
         var val = Math.floor(1000 + Math.random() * 9000);
 
         user.findOne({
-            where: { email: req.body.email }
+            where: {email: req.body.email}
         }).then(u => {
             if (u) {
                 console.log(u);
@@ -42,7 +39,7 @@ exports.sellerSignUp = (req, res, next) => {
             } else {
                 bcript.hash(req.body.pword, 10, (err, hash) => {
                     if (err) {
-                        return status(500).json({ error: err });
+                        return status(500).json({error: err});
                     } else {
                         user.create({
                             name: req.body.name,
@@ -86,13 +83,12 @@ exports.sellerSignUp = (req, res, next) => {
 }
 
 
-
 exports.customerSignUp = (req, res, next) => {
     try {
         var val = Math.floor(1000 + Math.random() * 9000);
 
         user.findOne({
-            where: { email: req.body.email }
+            where: {email: req.body.email}
         }).then(u => {
             if (u) {
                 console.log(u);
@@ -102,7 +98,7 @@ exports.customerSignUp = (req, res, next) => {
             } else {
                 bcript.hash(req.body.pword, 10, (err, hash) => {
                     if (err) {
-                        return status(500).json({ error: err });
+                        return status(500).json({error: err});
                     } else {
                         user.create({
                             name: req.body.name,
@@ -133,7 +129,6 @@ exports.customerSignUp = (req, res, next) => {
                             }
 
 
-
                             res.send(result);
                         });
                     }
@@ -148,28 +143,25 @@ exports.customerSignUp = (req, res, next) => {
 }
 
 
-
-
-
 exports.loginSeller = (req, res, next) => {
     try {
         user.findOne({
-            where: { email: req.body.email }
+            where: {email: req.body.email}
         }).then(use => {
             if (use) {
                 bcript.compare(req.body.pword, use.pword, (err, result) => {
                     if (err) {
-                        return res.status(401).json({ message: 'user name or password is wrong' });
+                        return res.status(401).json({message: 'user name or password is wrong'});
                     }
                     if (result) {
                         const token = jwt.sign({
-                            uid: use.iduser,
-                            name: use.name,
-                            nic: use.nic,
-                            mobile: use.mobile,
-                            image: use.image,
-                            uType: use.utype_idutype
-                        },
+                                uid: use.iduser,
+                                name: use.name,
+                                nic: use.nic,
+                                mobile: use.mobile,
+                                image: use.image,
+                                uType: use.utype_idutype
+                            },
                             process.env.JWT_KEY,
                             {
                                 expiresIn: "1h"
@@ -183,7 +175,7 @@ exports.loginSeller = (req, res, next) => {
                 });
 
             } else {
-                return res.status(401).json({ message: 'user name or password is wrong' });
+                return res.status(401).json({message: 'user name or password is wrong'});
             }
 
         }).catch(error => {
@@ -201,7 +193,7 @@ exports.loginSeller = (req, res, next) => {
 exports.updateUser = (req, res, next) => {
     try {
         user.findOne({
-            where: { iduser: req.body.uid }
+            where: {iduser: req.body.uid}
         }).then(user => {
             user.update({
                 branch: req.body.branch,
@@ -234,7 +226,7 @@ exports.addAddress = (req, res, next) => {
                 line3: req.body.line3,
                 postal_code: req.body.postal_code,
                 isdiliver: 1,
-                country: 'Sri Lanka'
+                country: req.body.country
             }).then(result => {
                 res.send(result);
             });
@@ -259,11 +251,13 @@ exports.setAsDefaltAddress = (req, res, next) => {
 }
 
 
-
 exports.getAddress = (req, res, next) => {
     try {
-        mycon.execute("SELECT address.idaddress,address.line1,address.line2,address.line3,address.postal_code,address.country,address.x,address.y, " +
-            "address.`status`,address.isdiliver,address.user_iduser,address.createdAt,address.updatedAt FROM address WHERE address.user_iduser=" + req.body.uid,
+        mycon.execute("SELECT address.idaddress,address.line1,address.line2,address.line3,address.postal_code,address.country," +
+            "address.x,address.y,address.`status`,address.isdiliver,address.user_iduser,address.createdAt,address.updatedAt," +
+            "distric.distric_sinhala,distric.distric_english,city.city_sinhala,city.city_english,city.drate_iddrate " +
+            "FROM address INNER JOIN distric ON distric.iddistric=address.country INNER JOIN " +
+            "city ON city.idcity=address.line3 WHERE address.user_iduser= " + req.body.uid,
             (error, rows, fildData) => {
                 if (!error) {
                     res.send(rows);
@@ -293,7 +287,7 @@ exports.getDefaultAddress = (req, res, next) => {
 exports.active = (req, res, next) => {
     try {
         user.findOne({
-            where: { iduser: req.body.uid }
+            where: {iduser: req.body.uid}
         }).then(user => {
             user.update({
                 isactive: req.body.status
@@ -306,8 +300,6 @@ exports.active = (req, res, next) => {
         res.status(500).send(error);
     }
 }
-
-
 
 
 exports.getUserById = (req, res, next) => {
@@ -331,7 +323,6 @@ exports.getUserById = (req, res, next) => {
         res.status(500).send(error);
     }
 }
-
 
 
 exports.getPrivilages = (req, res, next) => {
@@ -383,16 +374,16 @@ exports.getSellers = (req, res, next) => {
 exports.emailVerify = (req, res, next) => {
     try {
         user.findOne({
-            where: { email: req.body.email }
+            where: {email: req.body.email}
         }).then(use => {
             if (use.other1 === req.body.code) {
                 use.update({
                     status: 1
                 }).then(use => {
-                    res.send({ mg: 'ok' });
+                    res.send({mg: 'ok'});
                 });
             } else {
-                res.send({ mg: 'no' });
+                res.send({mg: 'no'});
             }
         });
     } catch (error) {
@@ -416,9 +407,37 @@ exports.getDistrics = (req, res, next) => {
     }
 }
 
+exports.getDistricById = (req, res, next) => {
+    try {
+        mycon.execute("SELECT distric.iddistric, distric.distric_sinhala, distric.distric_english FROM distric WHERE iddistric =" + req.body.id,
+            (error, rows, fildData) => {
+                if (!error) {
+                    res.send(rows);
+                }
+            });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+}
+
 exports.getCitys = (req, res, next) => {
     try {
         mycon.execute("SELECT city.idcity,city.city_sinhala,city.city_english,city.distric_iddistric,city.drate_iddrate FROM city WHERE city.distric_iddistric=" + req.body.iddistric,
+            (error, rows, fildData) => {
+                if (!error) {
+                    res.send(rows);
+                }
+            });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+}
+
+exports.getCityById = (req, res, next) => {
+    try {
+        mycon.execute("SELECT city.idcity,city.city_sinhala,city.city_english,city.city_status,city.distric_iddistric,city.drate_iddrate FROM city WHERE city.idcity= " + req.body.id,
             (error, rows, fildData) => {
                 if (!error) {
                     res.send(rows);
@@ -463,17 +482,8 @@ exports.cartProductCount = (req, res, next) => {
 }
 
 
-
-
-
-
-
-
-
-
-
 exports.mail = (req, res, next) => {
     mail.emailSend(req, res, next);
     mail.smsSend(req, res, next);
-    res.send({ 'OK': 'DONE' });
+    res.send({'OK': 'DONE'});
 }

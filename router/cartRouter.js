@@ -9,6 +9,8 @@ router.post("/addToCart", cart.addToCart);
 router.post("/getCartByUser", cart.getCartByUser);
 router.post("/updateQty", cart.updateQty);
 router.post("/removeFromCart", cart.removeFromCart);
+router.post("/confirm", cart.confirm);
+router.post("/addOder", cart.addOder);
 
 
 module.exports = router;

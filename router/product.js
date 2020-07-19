@@ -31,9 +31,7 @@ const storage = multer.diskStorage({
     }
 });
 
-const upload = multer({ storage: storage });
-
-
+const upload = multer({storage: storage});
 
 
 router.post("/pic_upload", upload.single('attach'), (req, res, next) => {
@@ -66,8 +64,10 @@ router.post("/getAllByUser", prodController.getAllProductByUser);
 router.post("/getProductByID", prodController.getProductByID);
 // router.post("/addPrices", prodController.addPrices);
 // router.post("/updateQty", prodController.updateQty);
- router.post("/getAllActiveProd", prodController.getAllActiveProducts);
- router.post("/activateProd", prodController.activateProd);
+router.post("/getAllActiveProd", prodController.getAllActiveProducts);
+router.post("/activateProd", prodController.activateProd);
+router.post("/getProduct4adds", prodController.getProduct4adds);
+router.post("/getProductByMcat", prodController.getProductByMcat);
 
 
 module.exports = router;

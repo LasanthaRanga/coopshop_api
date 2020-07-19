@@ -73,6 +73,11 @@ exports.emailSend = (param) => {
 
 
 exports.smsSend = (param) => {
+
+    console.log("sms send call");
+
+    console.log(param);
+
     let message = param.message;
     let val = "0000";
     let mobile = param.mob;
@@ -97,13 +102,14 @@ exports.smsSend = (param) => {
 
     http.get(request, function (err, res, body) {
         if (err) {
-            // console.log("eroor on");
-            // console.log(err);
+            console.log("sending error ====>");
+          //  console.log(err);
         } else {
             // console.log("Else");
-            // console.log(res);
+          //  console.log(res);
+            console.log("sent ====>");
         }
-      
+
     }
     );
 }
