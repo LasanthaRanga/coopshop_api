@@ -271,8 +271,11 @@ exports.getAddress = (req, res, next) => {
 
 exports.getDefaultAddress = (req, res, next) => {
     try {
-        mycon.execute("SELECT address.idaddress,address.line1,address.line2,address.line3,address.postal_code,address.country,address.x,address.y, " +
-            "address.`status`,address.isdiliver,address.user_iduser,address.createdAt,address.updatedAt FROM address WHERE address.isdiliver=1 AND address.user_iduser=" + req.body.uid,
+        mycon.execute("SELECT address.idaddress,address.line1,address.line2,address.line3,address.postal_code,address.country," +
+            "address.x,address.y,address.`status`,address.isdiliver,address.user_iduser,address.createdAt,address.updatedAt," +
+            "city.city_english,city.drate_iddrate,distric.distric_english,drate.iddrate,drate.type,drate.firstkg,drate.addkg " +
+            "FROM address INNER JOIN city ON city.idcity=address.line3 INNER JOIN distric ON distric.iddistric=address.country " +
+            "INNER JOIN drate ON city.drate_iddrate=drate.iddrate WHERE address.isdiliver=1 AND address.user_iduser=" + req.body.uid,
             (error, rows, fildData) => {
                 if (!error) {
                     res.send(rows[0]);
@@ -470,6 +473,26 @@ exports.cartProductCount = (req, res, next) => {
         mycon.execute("SELECT Sum(carthasprod.qty) AS qty,cart.idcart,cart.user_iduser,cart.`status` FROM cart " +
             " INNER JOIN carthasprod ON carthasprod.cartid=cart.idcart WHERE cart.user_iduser= " + req.body.uid +
             " AND cart.`status`=0 GROUP BY cart.idcart",
+            (error, rows, fildData) => {
+                if (!error) {
+                    res.send(rows);
+                }
+            });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+}
+
+exports.myOders = (req, res, next) => {
+    try {
+        mycon.execute("SELECT oder.id,oder.cart_id,oder.cus_id,oder.seller_id,oder.prod_id,oder.qty,oder.confirm_date," +
+            "oder.tracking_no,oder.tracking_info,oder.shiped_date,oder.recived_date,oder.recived_info,oder.`status`," +
+            "oder.status_text,product.idproduct,product.`name`,product.`code`,product.description,product.gender,product.`status`," +
+            "product.others,product.rating,product.user_iduser,product.cat1_idcat1,product.cat2_idcat2,product.createdAt," +
+            "product.updatedAt,product.name_s,product.description_s,product.price,product.disrate,product.disval,product.selling," +
+            "product.netprice,product.commition,product.weight FROM oder INNER JOIN product ON product.idproduct=oder.prod_id " +
+            "WHERE oder.cus_id=" + req.body.cusid,
             (error, rows, fildData) => {
                 if (!error) {
                     res.send(rows);
