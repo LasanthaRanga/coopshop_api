@@ -488,11 +488,57 @@ exports.myOders = (req, res, next) => {
     try {
         mycon.execute("SELECT oder.id,oder.cart_id,oder.cus_id,oder.seller_id,oder.prod_id,oder.qty,oder.confirm_date," +
             "oder.tracking_no,oder.tracking_info,oder.shiped_date,oder.recived_date,oder.recived_info,oder.`status`," +
-            "oder.status_text,product.idproduct,product.`name`,product.`code`,product.description,product.gender,product.`status`," +
-            "product.others,product.rating,product.user_iduser,product.cat1_idcat1,product.cat2_idcat2,product.createdAt," +
-            "product.updatedAt,product.name_s,product.description_s,product.price,product.disrate,product.disval,product.selling," +
-            "product.netprice,product.commition,product.weight FROM oder INNER JOIN product ON product.idproduct=oder.prod_id " +
-            "WHERE oder.cus_id=" + req.body.cusid,
+            "oder.status_text,product.idproduct,product.`name`,product.`code`,product.description,product.gender," +
+            "product.`status`,product.others,product.rating,product.user_iduser,product.cat1_idcat1,product.cat2_idcat2," +
+            "product.createdAt,product.updatedAt,product.name_s,product.description_s,product.price,product.disrate," +
+            "product.disval,product.selling,product.netprice,product.commition,product.weight,prodimage.url " +
+            "FROM oder INNER JOIN product ON product.idproduct=oder.prod_id INNER JOIN prodimage ON " +
+            "prodimage.product_idproduct=product.idproduct WHERE oder.cus_id= '" + req.body.cusid + "' " +
+            "GROUP BY oder.id,product.idproduct",
+            (error, rows, fildData) => {
+                if (!error) {
+                    res.send(rows);
+                }
+            });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+}
+
+exports.allOders = (req, res, next) => {
+    try {
+        mycon.execute("SELECT oder.id,oder.cart_id,oder.cus_id,oder.seller_id,oder.prod_id,oder.qty,oder.confirm_date," +
+            "oder.tracking_no,oder.tracking_info,oder.shiped_date,oder.recived_date,oder.recived_info,oder.`status`," +
+            "oder.status_text,product.idproduct,product.`name`,product.`code`,product.description,product.gender," +
+            "product.`status`,product.others,product.rating,product.user_iduser,product.cat1_idcat1,product.cat2_idcat2," +
+            "product.createdAt,product.updatedAt,product.name_s,product.description_s,product.price,product.disrate," +
+            "product.disval,product.selling,product.netprice,product.commition,product.weight,prodimage.url " +
+            "FROM oder INNER JOIN product ON product.idproduct=oder.prod_id INNER JOIN prodimage ON " +
+            "prodimage.product_idproduct=product.idproduct " +
+            "GROUP BY oder.id,product.idproduct",
+            (error, rows, fildData) => {
+                if (!error) {
+                    res.send(rows);
+                }
+            });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+}
+
+exports.myDiliver = (req, res, next) => {
+    try {
+        mycon.execute("SELECT oder.id,oder.cart_id,oder.cus_id,oder.seller_id,oder.prod_id,oder.qty,oder.confirm_date," +
+            "oder.tracking_no,oder.tracking_info,oder.shiped_date,oder.recived_date,oder.recived_info,oder.`status`," +
+            "oder.status_text,product.idproduct,product.`name`,product.`code`,product.description,product.gender," +
+            "product.`status`,product.others,product.rating,product.user_iduser,product.cat1_idcat1,product.cat2_idcat2," +
+            "product.createdAt,product.updatedAt,product.name_s,product.description_s,product.price,product.disrate," +
+            "product.disval,product.selling,product.netprice,product.commition,product.weight,prodimage.url " +
+            "FROM oder INNER JOIN product ON product.idproduct=oder.prod_id INNER JOIN prodimage ON " +
+            "prodimage.product_idproduct=product.idproduct WHERE oder.seller_id = '" + req.body.uid + "' " +
+            "GROUP BY oder.id,product.idproduct",
             (error, rows, fildData) => {
                 if (!error) {
                     res.send(rows);

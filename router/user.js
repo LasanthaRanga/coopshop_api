@@ -53,6 +53,9 @@ router.post("/getDistrics", userController.getDistrics);
 router.post("/getDistrics", userController.getDistricById);
 router.post("/getCitys", userController.getCitys);
 router.post("/getCitys", userController.getCityById);
+router.post("/myOders", userController.myOders);
+router.post("/allOders", userController.allOders);
+router.post("/myDiliver", userController.myDiliver);
 
 
 
