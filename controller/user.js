@@ -10,7 +10,7 @@ const mail = require('../middleware/email');
 const {param} = require('../router/user');
 
 
-exports.picupload = exports.login = (req, res, next) => {
+exports.picupload =  (req, res, next) => {
     try {
         mycon.execute("select * from user",
             (error, rows, fildData) => {
